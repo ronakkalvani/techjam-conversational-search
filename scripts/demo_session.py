@@ -196,10 +196,16 @@ def main() -> None:
     parser.add_argument("--json", action="store_true", help="emit machine-readable output")
     args = parser.parse_args()
 
+    if not args.json:
+        print("Loading the official catalog and initializing EntropyShop...", flush=True)
+    started = time.perf_counter()
     samples = load_jsonl(args.dataset)
     catalog_ids, categories, products = catalog_index(args.catalog)
     sample = select_sample(samples, args.sample_id, args.scenario)
     agent = Agent(args.catalog)
+    initialization_seconds = time.perf_counter() - started
+    if not args.json:
+        print(f"Ready in {initialization_seconds:.2f} seconds.\n", flush=True)
     result = run_session(
         agent,
         sample,

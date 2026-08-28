@@ -222,6 +222,9 @@ Benefit: 0.187 under paraphrase.
 
 ## Three-minute demo script
 
+A paste-ready Devpost description, timed narration, and recording checklist are
+available in **[docs/SUBMISSION.md](docs/SUBMISSION.md)**.
+
 1. **The problem** (20 s) — 50,000 products, a hidden target, 10 turns.
    Baseline BM25 scores 0.107.
 2. **The insight** (30 s) — the customer states requirements, not products.
@@ -258,7 +261,7 @@ starter/            agent runtime (no evaluator import, no labels)
 scripts/            demo_session · run_eval · compare_policies · tune_config
                     inspect_errors · stress_paraphrase
 tests/              50 tests (44 agent + 3 demo + 3 official evaluator)
-docs/               ARCHITECTURE.md · EXPERIMENTS.md
+docs/               ARCHITECTURE.md · EXPERIMENTS.md · SUBMISSION.md
 ```
 
 ## Compliance
