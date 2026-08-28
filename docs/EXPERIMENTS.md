@@ -1,5 +1,11 @@
 # EntropyShop — Experiments
 
+> **Evaluation note:** The historical ablations below were run against all 200
+> public development sessions and therefore informed the shipped policy. They
+> are development comparisons, not held-out estimates. The deterministic fold
+> protocol introduced for future changes is documented in
+> [GENERALIZATION.md](GENERALIZATION.md).
+
 Every number below comes from the **unmodified** official evaluator
 (`evaluator/local_evaluator.py`) over all 200 public sessions, unless the row
 is explicitly labelled a paraphrase stress test.

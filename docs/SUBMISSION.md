@@ -84,7 +84,10 @@ and subsequent non-refusal messages as evidence.
 - 0 reported tokens and $0 model cost
 - Fully deterministic and offline
 - 0.92838 TechnicalScore under the paraphrased-customer stress test
-- 50 passing automated tests, including the official evaluator tests
+- 57 passing automated tests, including split safeguards and the official
+  evaluator tests
+- 1.000 Hit Rate on every deterministic 40-session fold, with TechnicalScore
+  ranging from 0.944321 to 0.966583
 
 ## What we learned
 

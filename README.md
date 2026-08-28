@@ -129,6 +129,10 @@ python scripts/compare_policies.py
 # Error analysis and robustness
 python scripts/inspect_errors.py
 python scripts/stress_paraphrase.py --mode paraphrase
+
+# Verify and evaluate the deterministic public-session folds
+python scripts/make_splits.py --check
+python scripts/run_split_eval.py --split folds
 ```
 
 The demo command runs against the real 50,000-product catalog and prints each
@@ -200,6 +204,25 @@ opening and every later turn is a reply, meaning anything not recognised as a
 refusal or override is read as a requirement. Cost: 0.003 on the public set.
 Benefit: 0.187 under paraphrase.
 
+## Generalization protocol
+
+The `0.955831` result is a **public development score**: the final policy was
+selected after experiments on all 200 released sessions. It is not presented as
+an unbiased estimate of private performance.
+
+For future changes, `data/splits/public_v1.json` partitions the public set into
+five deterministic, scenario-stratified folds of 40 sessions. Folds 1–3 are
+development, fold 4 is validation, and fold 5 is an aggregate-only internal
+test guard. Every fold contains 16 Buying, 16 Browsing, 6 Intent Override, and
+2 Boundary sessions.
+
+The frozen policy retains `1.000` Hit Rate on every fold; TechnicalScore ranges
+from `0.944321` to `0.966583`, with mean `0.955831` and standard deviation
+`0.008715`. Because the split was introduced after the baseline was developed,
+fold 5 is a guard for future modifications rather than a retrospectively clean
+test. See **[docs/GENERALIZATION.md](docs/GENERALIZATION.md)** for the leakage
+audit, commands, safeguards, and unseen-target testing roadmap.
+
 ## Limitations and what we would do next
 
 - **Zero misses on 200 public sessions is not a promise of zero on 800
@@ -259,9 +282,9 @@ starter/            agent runtime (no evaluator import, no labels)
   text.py           tokenisation
   explanations.py   fixed question templates
 scripts/            demo_session · run_eval · compare_policies · tune_config
-                    inspect_errors · stress_paraphrase
-tests/              50 tests (44 agent + 3 demo + 3 official evaluator)
-docs/               ARCHITECTURE.md · EXPERIMENTS.md · SUBMISSION.md
+                    inspect_errors · stress_paraphrase · split evaluation
+tests/              57 tests (44 agent + 7 split + 3 demo + 3 evaluator)
+docs/               ARCHITECTURE · EXPERIMENTS · GENERALIZATION · SUBMISSION
 ```
 
 ## Compliance
