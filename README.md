@@ -110,6 +110,9 @@ wc -l data/catalog.jsonl        # expect 50000
 ## Reproducing our results
 
 ```bash
+# Video-friendly single session using the official customer protocol
+python scripts/demo_session.py --sample-id public_0094
+
 # Official evaluator — the number we report
 python -m evaluator.local_evaluator \
     --catalog data/catalog.jsonl --dataset data/public_set.jsonl --output results.json
@@ -126,6 +129,16 @@ python scripts/compare_policies.py
 # Error analysis and robustness
 python scripts/inspect_errors.py
 python scripts/stress_paraphrase.py --mode paraphrase
+```
+
+The demo command runs against the real 50,000-product catalog and prints each
+customer turn, the agent's clarification field, titled recommendations,
+latency, and the final hidden-target reveal. Omit `--sample-id` to use the
+first sample for a scenario, or choose another official scenario:
+
+```bash
+python scripts/demo_session.py --scenario intent_override
+python scripts/demo_session.py --scenario boundary
 ```
 
 ## Results by scenario
@@ -214,7 +227,8 @@ Benefit: 0.187 under paraphrase.
 2. **The insight** (30 s) — the customer states requirements, not products.
    Show the headroom table: 1 → 2 → 4 requirements gives 0.325 → 0.675 → 0.935.
    So *asking well* beats *ranking harder*.
-3. **Live session** (60 s) — run `python scripts/run_eval.py`. Walk one
+3. **Live session** (60 s) — run
+   `python scripts/demo_session.py --sample-id public_0094`. Walk the
    buying session: category resolves the bucket, the agent asks the
    highest-information attribute, the answer collapses the posterior, target
    lands at rank 1 by turn 2.
@@ -241,9 +255,9 @@ starter/            agent runtime (no evaluator import, no labels)
   state.py          per-session belief
   text.py           tokenisation
   explanations.py   fixed question templates
-scripts/            run_eval · compare_policies · tune_config
+scripts/            demo_session · run_eval · compare_policies · tune_config
                     inspect_errors · stress_paraphrase
-tests/              47 tests (44 agent + 3 official evaluator)
+tests/              50 tests (44 agent + 3 demo + 3 official evaluator)
 docs/               ARCHITECTURE.md · EXPERIMENTS.md
 ```
 
