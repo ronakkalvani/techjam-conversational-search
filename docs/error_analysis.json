@@ -1,0 +1,1208 @@
+{
+  "hit_rank_1": [
+    {
+      "sample_id": "public_0001",
+      "scenario": "buying",
+      "rank": 1,
+      "turn": 2
+    },
+    {
+      "sample_id": "public_0003",
+      "scenario": "intent_override",
+      "rank": 1,
+      "turn": 3
+    },
+    {
+      "sample_id": "public_0004",
+      "scenario": "intent_override",
+      "rank": 1,
+      "turn": 3
+    },
+    {
+      "sample_id": "public_0005",
+      "scenario": "buying",
+      "rank": 1,
+      "turn": 1
+    },
+    {
+      "sample_id": "public_0006",
+      "scenario": "browsing",
+      "rank": 1,
+      "turn": 1
+    },
+    {
+      "sample_id": "public_0007",
+      "scenario": "browsing",
+      "rank": 1,
+      "turn": 2
+    },
+    {
+      "sample_id": "public_0008",
+      "scenario": "buying",
+      "rank": 1,
+      "turn": 1
+    },
+    {
+      "sample_id": "public_0009",
+      "scenario": "buying",
+      "rank": 1,
+      "turn": 2
+    },
+    {
+      "sample_id": "public_0010",
+      "scenario": "buying",
+      "rank": 1,
+      "turn": 1
+    },
+    {
+      "sample_id": "public_0011",
+      "scenario": "browsing",
+      "rank": 1,
+      "turn": 3
+    },
+    {
+      "sample_id": "public_0013",
+      "scenario": "intent_override",
+      "rank": 1,
+      "turn": 4
+    },
+    {
+      "sample_id": "public_0014",
+      "scenario": "browsing",
+      "rank": 1,
+      "turn": 2
+    },
+    {
+      "sample_id": "public_0015",
+      "scenario": "browsing",
+      "rank": 1,
+      "turn": 2
+    },
+    {
+      "sample_id": "public_0016",
+      "scenario": "browsing",
+      "rank": 1,
+      "turn": 1
+    },
+    {
+      "sample_id": "public_0017",
+      "scenario": "buying",
+      "rank": 1,
+      "turn": 2
+    },
+    {
+      "sample_id": "public_0018",
+      "scenario": "buying",
+      "rank": 1,
+      "turn": 2
+    },
+    {
+      "sample_id": "public_0019",
+      "scenario": "browsing",
+      "rank": 1,
+      "turn": 2
+    },
+    {
+      "sample_id": "public_0020",
+      "scenario": "buying",
+      "rank": 1,
+      "turn": 4
+    },
+    {
+      "sample_id": "public_0021",
+      "scenario": "browsing",
+      "rank": 1,
+      "turn": 1
+    },
+    {
+      "sample_id": "public_0022",
+      "scenario": "buying",
+      "rank": 1,
+      "turn": 2
+    },
+    {
+      "sample_id": "public_0023",
+      "scenario": "intent_override",
+      "rank": 1,
+      "turn": 4
+    },
+    {
+      "sample_id": "public_0024",
+      "scenario": "buying",
+      "rank": 1,
+      "turn": 2
+    },
+    {
+      "sample_id": "public_0025",
+      "scenario": "browsing",
+      "rank": 1,
+      "turn": 1
+    },
+    {
+      "sample_id": "public_0026",
+      "scenario": "buying",
+      "rank": 1,
+      "turn": 1
+    },
+    {
+      "sample_id": "public_0027",
+      "scenario": "buying",
+      "rank": 1,
+      "turn": 2
+    },
+    {
+      "sample_id": "public_0028",
+      "scenario": "buying",
+      "rank": 1,
+      "turn": 3
+    },
+    {
+      "sample_id": "public_0029",
+      "scenario": "buying",
+      "rank": 1,
+      "turn": 2
+    },
+    {
+      "sample_id": "public_0030",
+      "scenario": "buying",
+      "rank": 1,
+      "turn": 1
+    },
+    {
+      "sample_id": "public_0031",
+      "scenario": "buying",
+      "rank": 1,
+      "turn": 2
+    },
+    {
+      "sample_id": "public_0032",
+      "scenario": "buying",
+      "rank": 1,
+      "turn": 1
+    },
+    {
+      "sample_id": "public_0033",
+      "scenario": "browsing",
+      "rank": 1,
+      "turn": 3
+    },
+    {
+      "sample_id": "public_0034",
+      "scenario": "intent_override",
+      "rank": 1,
+      "turn": 4
+    },
+    {
+      "sample_id": "public_0035",
+      "scenario": "boundary",
+      "rank": 1,
+      "turn": 2
+    },
+    {
+      "sample_id": "public_0036",
+      "scenario": "browsing",
+      "rank": 1,
+      "turn": 2
+    },
+    {
+      "sample_id": "public_0037",
+      "scenario": "browsing",
+      "rank": 1,
+      "turn": 1
+    },
+    {
+      "sample_id": "public_0038",
+      "scenario": "intent_override",
+      "rank": 1,
+      "turn": 4
+    },
+    {
+      "sample_id": "public_0039",
+      "scenario": "browsing",
+      "rank": 1,
+      "turn": 2
+    },
+    {
+      "sample_id": "public_0040",
+      "scenario": "browsing",
+      "rank": 1,
+      "turn": 3
+    },
+    {
+      "sample_id": "public_0041",
+      "scenario": "boundary",
+      "rank": 1,
+      "turn": 4
+    },
+    {
+      "sample_id": "public_0042",
+      "scenario": "buying",
+      "rank": 1,
+      "turn": 2
+    },
+    {
+      "sample_id": "public_0043",
+      "scenario": "browsing",
+      "rank": 1,
+      "turn": 2
+    },
+    {
+      "sample_id": "public_0044",
+      "scenario": "buying",
+      "rank": 1,
+      "turn": 1
+    },
+    {
+      "sample_id": "public_0045",
+      "scenario": "buying",
+      "rank": 1,
+      "turn": 2
+    },
+    {
+      "sample_id": "public_0046",
+      "scenario": "intent_override",
+      "rank": 1,
+      "turn": 4
+    },
+    {
+      "sample_id": "public_0048",
+      "scenario": "browsing",
+      "rank": 1,
+      "turn": 1
+    },
+    {
+      "sample_id": "public_0049",
+      "scenario": "browsing",
+      "rank": 1,
+      "turn": 2
+    },
+    {
+      "sample_id": "public_0050",
+      "scenario": "boundary",
+      "rank": 1,
+      "turn": 2
+    },
+    {
+      "sample_id": "public_0051",
+      "scenario": "browsing",
+      "rank": 1,
+      "turn": 2
+    },
+    {
+      "sample_id": "public_0053",
+      "scenario": "buying",
+      "rank": 1,
+      "turn": 1
+    },
+    {
+      "sample_id": "public_0055",
+      "scenario": "browsing",
+      "rank": 1,
+      "turn": 2
+    },
+    {
+      "sample_id": "public_0056",
+      "scenario": "browsing",
+      "rank": 1,
+      "turn": 2
+    },
+    {
+      "sample_id": "public_0057",
+      "scenario": "browsing",
+      "rank": 1,
+      "turn": 2
+    },
+    {
+      "sample_id": "public_0058",
+      "scenario": "buying",
+      "rank": 1,
+      "turn": 2
+    },
+    {
+      "sample_id": "public_0059",
+      "scenario": "browsing",
+      "rank": 1,
+      "turn": 2
+    },
+    {
+      "sample_id": "public_0060",
+      "scenario": "browsing",
+      "rank": 1,
+      "turn": 2
+    },
+    {
+      "sample_id": "public_0061",
+      "scenario": "buying",
+      "rank": 1,
+      "turn": 1
+    },
+    {
+      "sample_id": "public_0062",
+      "scenario": "browsing",
+      "rank": 1,
+      "turn": 1
+    },
+    {
+      "sample_id": "public_0063",
+      "scenario": "browsing",
+      "rank": 1,
+      "turn": 2
+    },
+    {
+      "sample_id": "public_0065",
+      "scenario": "buying",
+      "rank": 1,
+      "turn": 1
+    },
+    {
+      "sample_id": "public_0066",
+      "scenario": "buying",
+      "rank": 1,
+      "turn": 1
+    },
+    {
+      "sample_id": "public_0067",
+      "scenario": "buying",
+      "rank": 1,
+      "turn": 1
+    },
+    {
+      "sample_id": "public_0068",
+      "scenario": "intent_override",
+      "rank": 1,
+      "turn": 3
+    },
+    {
+      "sample_id": "public_0069",
+      "scenario": "browsing",
+      "rank": 1,
+      "turn": 2
+    },
+    {
+      "sample_id": "public_0070",
+      "scenario": "browsing",
+      "rank": 1,
+      "turn": 1
+    },
+    {
+      "sample_id": "public_0072",
+      "scenario": "intent_override",
+      "rank": 1,
+      "turn": 3
+    },
+    {
+      "sample_id": "public_0073",
+      "scenario": "browsing",
+      "rank": 1,
+      "turn": 2
+    },
+    {
+      "sample_id": "public_0074",
+      "scenario": "browsing",
+      "rank": 1,
+      "turn": 3
+    },
+    {
+      "sample_id": "public_0075",
+      "scenario": "browsing",
+      "rank": 1,
+      "turn": 3
+    },
+    {
+      "sample_id": "public_0076",
+      "scenario": "browsing",
+      "rank": 1,
+      "turn": 3
+    },
+    {
+      "sample_id": "public_0077",
+      "scenario": "browsing",
+      "rank": 1,
+      "turn": 1
+    },
+    {
+      "sample_id": "public_0078",
+      "scenario": "intent_override",
+      "rank": 1,
+      "turn": 3
+    },
+    {
+      "sample_id": "public_0079",
+      "scenario": "browsing",
+      "rank": 1,
+      "turn": 2
+    },
+    {
+      "sample_id": "public_0080",
+      "scenario": "intent_override",
+      "rank": 1,
+      "turn": 4
+    },
+    {
+      "sample_id": "public_0082",
+      "scenario": "buying",
+      "rank": 1,
+      "turn": 1
+    },
+    {
+      "sample_id": "public_0084",
+      "scenario": "intent_override",
+      "rank": 1,
+      "turn": 4
+    },
+    {
+      "sample_id": "public_0085",
+      "scenario": "browsing",
+      "rank": 1,
+      "turn": 2
+    },
+    {
+      "sample_id": "public_0086",
+      "scenario": "browsing",
+      "rank": 1,
+      "turn": 2
+    },
+    {
+      "sample_id": "public_0087",
+      "scenario": "browsing",
+      "rank": 1,
+      "turn": 2
+    },
+    {
+      "sample_id": "public_0088",
+      "scenario": "buying",
+      "rank": 1,
+      "turn": 1
+    },
+    {
+      "sample_id": "public_0089",
+      "scenario": "intent_override",
+      "rank": 1,
+      "turn": 3
+    },
+    {
+      "sample_id": "public_0090",
+      "scenario": "buying",
+      "rank": 1,
+      "turn": 1
+    },
+    {
+      "sample_id": "public_0091",
+      "scenario": "browsing",
+      "rank": 1,
+      "turn": 2
+    },
+    {
+      "sample_id": "public_0092",
+      "scenario": "browsing",
+      "rank": 1,
+      "turn": 3
+    },
+    {
+      "sample_id": "public_0093",
+      "scenario": "buying",
+      "rank": 1,
+      "turn": 2
+    },
+    {
+      "sample_id": "public_0094",
+      "scenario": "buying",
+      "rank": 1,
+      "turn": 2
+    },
+    {
+      "sample_id": "public_0095",
+      "scenario": "buying",
+      "rank": 1,
+      "turn": 2
+    },
+    {
+      "sample_id": "public_0096",
+      "scenario": "intent_override",
+      "rank": 1,
+      "turn": 3
+    },
+    {
+      "sample_id": "public_0098",
+      "scenario": "browsing",
+      "rank": 1,
+      "turn": 2
+    },
+    {
+      "sample_id": "public_0100",
+      "scenario": "browsing",
+      "rank": 1,
+      "turn": 2
+    },
+    {
+      "sample_id": "public_0101",
+      "scenario": "buying",
+      "rank": 1,
+      "turn": 2
+    },
+    {
+      "sample_id": "public_0102",
+      "scenario": "browsing",
+      "rank": 1,
+      "turn": 2
+    },
+    {
+      "sample_id": "public_0105",
+      "scenario": "browsing",
+      "rank": 1,
+      "turn": 2
+    },
+    {
+      "sample_id": "public_0106",
+      "scenario": "buying",
+      "rank": 1,
+      "turn": 2
+    },
+    {
+      "sample_id": "public_0107",
+      "scenario": "buying",
+      "rank": 1,
+      "turn": 1
+    },
+    {
+      "sample_id": "public_0108",
+      "scenario": "buying",
+      "rank": 1,
+      "turn": 1
+    },
+    {
+      "sample_id": "public_0109",
+      "scenario": "buying",
+      "rank": 1,
+      "turn": 2
+    },
+    {
+      "sample_id": "public_0110",
+      "scenario": "browsing",
+      "rank": 1,
+      "turn": 2
+    },
+    {
+      "sample_id": "public_0111",
+      "scenario": "buying",
+      "rank": 1,
+      "turn": 1
+    },
+    {
+      "sample_id": "public_0112",
+      "scenario": "boundary",
+      "rank": 1,
+      "turn": 3
+    },
+    {
+      "sample_id": "public_0113",
+      "scenario": "browsing",
+      "rank": 1,
+      "turn": 2
+    },
+    {
+      "sample_id": "public_0114",
+      "scenario": "buying",
+      "rank": 1,
+      "turn": 2
+    },
+    {
+      "sample_id": "public_0115",
+      "scenario": "browsing",
+      "rank": 1,
+      "turn": 2
+    },
+    {
+      "sample_id": "public_0116",
+      "scenario": "buying",
+      "rank": 1,
+      "turn": 1
+    },
+    {
+      "sample_id": "public_0117",
+      "scenario": "buying",
+      "rank": 1,
+      "turn": 1
+    },
+    {
+      "sample_id": "public_0118",
+      "scenario": "buying",
+      "rank": 1,
+      "turn": 2
+    },
+    {
+      "sample_id": "public_0119",
+      "scenario": "buying",
+      "rank": 1,
+      "turn": 1
+    },
+    {
+      "sample_id": "public_0120",
+      "scenario": "browsing",
+      "rank": 1,
+      "turn": 3
+    },
+    {
+      "sample_id": "public_0121",
+      "scenario": "browsing",
+      "rank": 1,
+      "turn": 2
+    },
+    {
+      "sample_id": "public_0122",
+      "scenario": "browsing",
+      "rank": 1,
+      "turn": 2
+    },
+    {
+      "sample_id": "public_0123",
+      "scenario": "intent_override",
+      "rank": 1,
+      "turn": 3
+    },
+    {
+      "sample_id": "public_0124",
+      "scenario": "buying",
+      "rank": 1,
+      "turn": 2
+    },
+    {
+      "sample_id": "public_0125",
+      "scenario": "intent_override",
+      "rank": 1,
+      "turn": 4
+    },
+    {
+      "sample_id": "public_0126",
+      "scenario": "browsing",
+      "rank": 1,
+      "turn": 2
+    },
+    {
+      "sample_id": "public_0128",
+      "scenario": "browsing",
+      "rank": 1,
+      "turn": 2
+    },
+    {
+      "sample_id": "public_0129",
+      "scenario": "buying",
+      "rank": 1,
+      "turn": 2
+    },
+    {
+      "sample_id": "public_0130",
+      "scenario": "intent_override",
+      "rank": 1,
+      "turn": 3
+    },
+    {
+      "sample_id": "public_0131",
+      "scenario": "boundary",
+      "rank": 1,
+      "turn": 1
+    },
+    {
+      "sample_id": "public_0132",
+      "scenario": "buying",
+      "rank": 1,
+      "turn": 1
+    },
+    {
+      "sample_id": "public_0133",
+      "scenario": "buying",
+      "rank": 1,
+      "turn": 2
+    },
+    {
+      "sample_id": "public_0134",
+      "scenario": "browsing",
+      "rank": 1,
+      "turn": 1
+    },
+    {
+      "sample_id": "public_0135",
+      "scenario": "buying",
+      "rank": 1,
+      "turn": 1
+    },
+    {
+      "sample_id": "public_0136",
+      "scenario": "buying",
+      "rank": 1,
+      "turn": 2
+    },
+    {
+      "sample_id": "public_0137",
+      "scenario": "browsing",
+      "rank": 1,
+      "turn": 1
+    },
+    {
+      "sample_id": "public_0138",
+      "scenario": "browsing",
+      "rank": 1,
+      "turn": 2
+    },
+    {
+      "sample_id": "public_0139",
+      "scenario": "browsing",
+      "rank": 1,
+      "turn": 2
+    },
+    {
+      "sample_id": "public_0140",
+      "scenario": "browsing",
+      "rank": 1,
+      "turn": 2
+    },
+    {
+      "sample_id": "public_0141",
+      "scenario": "browsing",
+      "rank": 1,
+      "turn": 2
+    },
+    {
+      "sample_id": "public_0142",
+      "scenario": "intent_override",
+      "rank": 1,
+      "turn": 4
+    },
+    {
+      "sample_id": "public_0143",
+      "scenario": "buying",
+      "rank": 1,
+      "turn": 1
+    },
+    {
+      "sample_id": "public_0145",
+      "scenario": "buying",
+      "rank": 1,
+      "turn": 4
+    },
+    {
+      "sample_id": "public_0146",
+      "scenario": "buying",
+      "rank": 1,
+      "turn": 2
+    },
+    {
+      "sample_id": "public_0147",
+      "scenario": "browsing",
+      "rank": 1,
+      "turn": 1
+    },
+    {
+      "sample_id": "public_0148",
+      "scenario": "buying",
+      "rank": 1,
+      "turn": 2
+    },
+    {
+      "sample_id": "public_0149",
+      "scenario": "buying",
+      "rank": 1,
+      "turn": 1
+    },
+    {
+      "sample_id": "public_0150",
+      "scenario": "browsing",
+      "rank": 1,
+      "turn": 1
+    },
+    {
+      "sample_id": "public_0151",
+      "scenario": "browsing",
+      "rank": 1,
+      "turn": 2
+    },
+    {
+      "sample_id": "public_0152",
+      "scenario": "buying",
+      "rank": 1,
+      "turn": 2
+    },
+    {
+      "sample_id": "public_0153",
+      "scenario": "browsing",
+      "rank": 1,
+      "turn": 2
+    },
+    {
+      "sample_id": "public_0154",
+      "scenario": "buying",
+      "rank": 1,
+      "turn": 4
+    },
+    {
+      "sample_id": "public_0155",
+      "scenario": "buying",
+      "rank": 1,
+      "turn": 2
+    },
+    {
+      "sample_id": "public_0156",
+      "scenario": "buying",
+      "rank": 1,
+      "turn": 1
+    },
+    {
+      "sample_id": "public_0157",
+      "scenario": "buying",
+      "rank": 1,
+      "turn": 1
+    },
+    {
+      "sample_id": "public_0158",
+      "scenario": "browsing",
+      "rank": 1,
+      "turn": 2
+    },
+    {
+      "sample_id": "public_0159",
+      "scenario": "buying",
+      "rank": 1,
+      "turn": 1
+    },
+    {
+      "sample_id": "public_0160",
+      "scenario": "buying",
+      "rank": 1,
+      "turn": 1
+    },
+    {
+      "sample_id": "public_0162",
+      "scenario": "browsing",
+      "rank": 1,
+      "turn": 2
+    },
+    {
+      "sample_id": "public_0163",
+      "scenario": "buying",
+      "rank": 1,
+      "turn": 2
+    },
+    {
+      "sample_id": "public_0164",
+      "scenario": "browsing",
+      "rank": 1,
+      "turn": 3
+    },
+    {
+      "sample_id": "public_0165",
+      "scenario": "buying",
+      "rank": 1,
+      "turn": 1
+    },
+    {
+      "sample_id": "public_0166",
+      "scenario": "intent_override",
+      "rank": 1,
+      "turn": 4
+    },
+    {
+      "sample_id": "public_0168",
+      "scenario": "buying",
+      "rank": 1,
+      "turn": 1
+    },
+    {
+      "sample_id": "public_0169",
+      "scenario": "boundary",
+      "rank": 1,
+      "turn": 3
+    },
+    {
+      "sample_id": "public_0170",
+      "scenario": "browsing",
+      "rank": 1,
+      "turn": 3
+    },
+    {
+      "sample_id": "public_0173",
+      "scenario": "browsing",
+      "rank": 1,
+      "turn": 2
+    },
+    {
+      "sample_id": "public_0174",
+      "scenario": "buying",
+      "rank": 1,
+      "turn": 1
+    },
+    {
+      "sample_id": "public_0176",
+      "scenario": "browsing",
+      "rank": 1,
+      "turn": 1
+    },
+    {
+      "sample_id": "public_0178",
+      "scenario": "buying",
+      "rank": 1,
+      "turn": 3
+    },
+    {
+      "sample_id": "public_0179",
+      "scenario": "buying",
+      "rank": 1,
+      "turn": 2
+    },
+    {
+      "sample_id": "public_0180",
+      "scenario": "boundary",
+      "rank": 1,
+      "turn": 4
+    },
+    {
+      "sample_id": "public_0181",
+      "scenario": "browsing",
+      "rank": 1,
+      "turn": 2
+    },
+    {
+      "sample_id": "public_0182",
+      "scenario": "browsing",
+      "rank": 1,
+      "turn": 1
+    },
+    {
+      "sample_id": "public_0183",
+      "scenario": "intent_override",
+      "rank": 1,
+      "turn": 4
+    },
+    {
+      "sample_id": "public_0185",
+      "scenario": "buying",
+      "rank": 1,
+      "turn": 2
+    },
+    {
+      "sample_id": "public_0186",
+      "scenario": "intent_override",
+      "rank": 1,
+      "turn": 3
+    },
+    {
+      "sample_id": "public_0187",
+      "scenario": "boundary",
+      "rank": 1,
+      "turn": 5
+    },
+    {
+      "sample_id": "public_0188",
+      "scenario": "buying",
+      "rank": 1,
+      "turn": 1
+    },
+    {
+      "sample_id": "public_0189",
+      "scenario": "buying",
+      "rank": 1,
+      "turn": 1
+    },
+    {
+      "sample_id": "public_0190",
+      "scenario": "buying",
+      "rank": 1,
+      "turn": 1
+    },
+    {
+      "sample_id": "public_0191",
+      "scenario": "browsing",
+      "rank": 1,
+      "turn": 1
+    },
+    {
+      "sample_id": "public_0192",
+      "scenario": "boundary",
+      "rank": 1,
+      "turn": 3
+    },
+    {
+      "sample_id": "public_0193",
+      "scenario": "buying",
+      "rank": 1,
+      "turn": 1
+    },
+    {
+      "sample_id": "public_0194",
+      "scenario": "buying",
+      "rank": 1,
+      "turn": 3
+    },
+    {
+      "sample_id": "public_0195",
+      "scenario": "browsing",
+      "rank": 1,
+      "turn": 2
+    },
+    {
+      "sample_id": "public_0196",
+      "scenario": "browsing",
+      "rank": 1,
+      "turn": 2
+    },
+    {
+      "sample_id": "public_0197",
+      "scenario": "intent_override",
+      "rank": 1,
+      "turn": 4
+    },
+    {
+      "sample_id": "public_0198",
+      "scenario": "intent_override",
+      "rank": 1,
+      "turn": 4
+    },
+    {
+      "sample_id": "public_0199",
+      "scenario": "buying",
+      "rank": 1,
+      "turn": 1
+    },
+    {
+      "sample_id": "public_0200",
+      "scenario": "buying",
+      "rank": 1,
+      "turn": 1
+    }
+  ],
+  "hit_rank_2_3": [
+    {
+      "sample_id": "public_0002",
+      "scenario": "intent_override",
+      "rank": 2,
+      "turn": 3
+    },
+    {
+      "sample_id": "public_0012",
+      "scenario": "browsing",
+      "rank": 2,
+      "turn": 2
+    },
+    {
+      "sample_id": "public_0047",
+      "scenario": "browsing",
+      "rank": 2,
+      "turn": 2
+    },
+    {
+      "sample_id": "public_0052",
+      "scenario": "intent_override",
+      "rank": 2,
+      "turn": 3
+    },
+    {
+      "sample_id": "public_0054",
+      "scenario": "buying",
+      "rank": 2,
+      "turn": 3
+    },
+    {
+      "sample_id": "public_0064",
+      "scenario": "intent_override",
+      "rank": 2,
+      "turn": 4
+    },
+    {
+      "sample_id": "public_0071",
+      "scenario": "intent_override",
+      "rank": 2,
+      "turn": 7
+    },
+    {
+      "sample_id": "public_0081",
+      "scenario": "browsing",
+      "rank": 2,
+      "turn": 2
+    },
+    {
+      "sample_id": "public_0097",
+      "scenario": "buying",
+      "rank": 2,
+      "turn": 2
+    },
+    {
+      "sample_id": "public_0099",
+      "scenario": "browsing",
+      "rank": 2,
+      "turn": 3
+    },
+    {
+      "sample_id": "public_0103",
+      "scenario": "intent_override",
+      "rank": 2,
+      "turn": 4
+    },
+    {
+      "sample_id": "public_0104",
+      "scenario": "boundary",
+      "rank": 2,
+      "turn": 2
+    },
+    {
+      "sample_id": "public_0127",
+      "scenario": "browsing",
+      "rank": 2,
+      "turn": 2
+    },
+    {
+      "sample_id": "public_0161",
+      "scenario": "buying",
+      "rank": 2,
+      "turn": 2
+    },
+    {
+      "sample_id": "public_0167",
+      "scenario": "browsing",
+      "rank": 2,
+      "turn": 3
+    },
+    {
+      "sample_id": "public_0171",
+      "scenario": "buying",
+      "rank": 2,
+      "turn": 3
+    },
+    {
+      "sample_id": "public_0172",
+      "scenario": "browsing",
+      "rank": 2,
+      "turn": 2
+    },
+    {
+      "sample_id": "public_0175",
+      "scenario": "browsing",
+      "rank": 2,
+      "turn": 2
+    },
+    {
+      "sample_id": "public_0177",
+      "scenario": "intent_override",
+      "rank": 2,
+      "turn": 4
+    },
+    {
+      "sample_id": "public_0184",
+      "scenario": "browsing",
+      "rank": 2,
+      "turn": 2
+    }
+  ],
+  "hit_rank_4_10": [
+    {
+      "sample_id": "public_0083",
+      "scenario": "buying",
+      "rank": 7,
+      "turn": 8
+    },
+    {
+      "sample_id": "public_0144",
+      "scenario": "intent_override",
+      "rank": 9,
+      "turn": 5
+    }
+  ]
+}

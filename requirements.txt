@@ -1,0 +1,7 @@
+# EntropyShop runtime: standard library only.
+#
+# The competition agent has no third-party runtime dependency. It uses no
+# model, makes no network call, and reports zero token usage.
+#
+# Development-only (tests):
+pytest>=8.0
