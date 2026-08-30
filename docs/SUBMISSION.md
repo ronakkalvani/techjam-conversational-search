@@ -15,71 +15,138 @@ information value and finds the customer's hidden product in fewer turns.
 
 ## Short description
 
-EntropyShop reframes conversational product search as active preference
-elicitation. Instead of spending every turn generating more prose, it maintains
-a belief over 50,000 real products, ranks its best candidates, and asks the
-clarification question expected to remove the most uncertainty. It runs fully
-offline, uses no LLM at runtime, reports zero tokens, and achieves a 0.955831
-TechnicalScore on the 200-session public development benchmark.
+Most shopping searches start with an incomplete description rather than a
+product name. EntropyShop treats the conversation as a search for the missing
+clues: it ranks catalog candidates, maintains uncertainty over possible
+products, and asks the question most likely to make the next recommendation
+better. The result is a deterministic, offline shopping copilot with a
+0.955831 TechnicalScore on the 200-session public benchmark.
 
 ## Inspiration
 
-The baseline treats each customer message as another search query. Our early
-experiments showed that this misses the most valuable part of the interaction:
-the agent controls which preference it asks the customer to reveal next.
-Knowing one, two, and four requirements produced sharply improving hit rates,
-so we designed the system around acquiring useful evidence quickly rather than
-making ranking alone increasingly complicated.
+Shopping assistants are often evaluated as if the customer already knows the
+right keywords. In practice, people reveal their preferences incrementally:
+first a product type, then a material, then a fit, use case, or detail that
+distinguishes one item from another.
 
-The lexical-questioning concept was proposed by Aniket Khan, inspired by
-Akinator's question-driven narrowing of a hidden answer. EntropyShop adapts
-that idea to structured product attributes and expected information gain.
+That made us focus on the interaction itself. The central design question was
+not only which product to display, but which unanswered preference would be
+worth learning next. Akinator was an inspiration for this question-driven
+narrowing pattern, but we adapted the underlying idea to a fixed product
+catalog: use each turn to reduce uncertainty about a hidden target.
 
-## What it does
+The approach also fit the constraints of the challenge. With 50,000 catalog
+items and a ten-turn limit, the agent must make progress quickly, avoid losing
+the correct item through an overly strict filter, and ask questions that a
+customer can realistically answer.
 
-For every customer turn, EntropyShop:
+## Why a deterministic system
 
-1. parses new constraints and intent overrides into isolated session state;
-2. retrieves candidates through both category and lexical routes;
-3. ranks them with phrase containment, facet coverage, conflict penalties, and
+We considered the usual LLM-based route, including semantic retrieval and
+generated responses. We chose not to put an LLM in the submitted runtime for a
+deliberate reason: this task rewards faithful constraint handling and efficient
+catalog search more than open-ended prose generation.
+
+An LLM would add latency, cost, run-to-run variability, and a new failure mode:
+it could paraphrase or hallucinate a product attribute that is not present in
+the catalog. A model-free policy lets us inspect why a product was ranked, why
+a constraint was applied, and why a particular question was selected. It also
+makes the result reproducible in the organizer's local evaluation environment.
+
+This is a task-fit decision rather than an anti-LLM claim. We use explicit
+algorithms where the catalog is structured and the final action must be
+auditable: lexical evidence, product facets, posterior scores, and expected
+information gain.
+
+## Our solution
+
+EntropyShop treats the customer's intended product as a hidden target. For
+every turn, it:
+
+1. extracts constraints and intent changes from the new message;
+2. retrieves candidates through category and lexical routes;
+3. ranks them using phrase evidence, facet coverage, conflict penalties, and
    deterministic priors;
-4. returns its current best recommendations; and
-5. chooses the next clarification field using information gain tempered by
-   answerability, expected ranking improvement, missing-value probability, and
-   turn cost.
+4. estimates a posterior over the remaining candidates; and
+5. asks an information-gain question when another clue is likely to help.
 
-The customer receives recommendations and a useful question in the same turn.
-Previously rejected products are demoted, while intent overrides clear stale
-suppression and reactivate exploration.
+The category and lexical routes are unioned rather than chained as a hard
+filter. Category matching gives the system a strong signal for product type,
+while lexical matching preserves useful customer wording. This protects the
+target when one interpretation is incomplete.
+
+The conversation state also handles rejected products and changing intent. An
+override can clear stale suppression and reopen exploration instead of leaving
+the agent trapped by an earlier preference.
 
 ## How we built it
 
-- Python 3.11 and the standard library for the runtime
-- Immutable in-memory indexes over the frozen 50,000-product catalog
-- Turn-aware constraint parsing and explicit override semantics
-- Category-bucket plus IDF-weighted lexical retrieval
-- Two-stage deterministic ranking
-- Entropy and expected-residual-entropy question selection
-- Official evaluator integration, ablation scripts, robustness tests, and 57
-  automated tests
+The implementation uses Python 3.11 and the standard library. It builds
+immutable in-memory indexes over the frozen 50,000-product catalog. The ranker
+combines IDF-weighted lexical matching, phrase containment, catalog facets,
+conflict penalties, and deterministic priors.
+
+The question selector does not use raw entropy alone. Raw entropy can prefer a
+well-partitioning attribute such as brand even when the customer cannot answer
+it. Our policy combines information gain with answerability, expected ranking
+improvement, missing-value probability, and turn cost.
+
+We also implemented intent-conditioned routing and a sparse semantic route as
+experimental variants. They remain available for analysis, but the final
+submission uses the simpler baseline because it performed better on the
+held-out guard and is easier to reproduce.
+
+The repository includes official evaluator integration, ablation scripts,
+robustness tests, and 57 automated tests.
 
 The runtime has no external service, API key, model download, or network
 dependency.
 
-## Devpost disclosure fields
+## Results and analysis
 
-- **Track:** Track 4 — Shopping Copilot: AI Conversational Search and
-  Recommendations
-- **Development tools:** Python 3.11, Conda, Git, and pytest
-- **APIs:** None
-- **Libraries:** Python standard library at runtime; pytest for development
-  tests only
-- **Dataset and assets:** The organizer's frozen 50,000-product catalog and
-  200 public development sessions from the participant kit, derived from
-  Amazon Reviews 2023. No images, videos, user identifiers, reviews, private
-  sessions, or external model assets are used by the runtime.
-- **Runtime configuration:** Baseline mode with intent-conditioned and
-  semantic ablation flags disabled; no network and zero model tokens.
+On the 200-session public development benchmark, EntropyShop substantially
+improves on the organizer's weak BM25 baseline:
+
+| Metric | Official baseline | EntropyShop |
+|---|---:|---:|
+| Hit Rate@10 | 0.125 | **1.000000** |
+| MRR | 0.068034 | **0.932103** |
+| MTTC | 9.81 | **2.190** |
+| Efficiency | 0.119 | **0.881** |
+| TechnicalScore | 0.10671 | **0.955831** |
+| Runtime model tokens | 0 | **0** |
+
+The score did not come from one large model or one magic feature. It came from
+matching each part of the design to a failure mode we could measure:
+
+- Lexical retrieval alone scored 0.08458. Adding the category route raised the
+  score to 0.40718, showing that recognizing the product type was the first
+  major bottleneck.
+- Adding facet scoring raised TechnicalScore to 0.82108, because explicit
+  attributes such as material and fit were more informative than generic word
+  overlap.
+- Phrase containment and the full ranker raised it to 0.86237.
+- Adaptive questioning improved the fixed-order policy from 0.86491 to 0.87458.
+  The gain came mainly from avoiding questions that customers could not answer.
+- Exploration and a staged recommendation budget improved target coverage and
+  MRR without sacrificing Hit Rate. The final policy reaches rank-quality
+  improvements while keeping the target in the top ten for every public
+  session.
+
+The frozen policy achieved Hit Rate@10 of 1.000 on every 40-session fold. Across
+the five deterministic folds, TechnicalScore ranged from 0.944321 to 0.966583,
+with mean 0.955831 and standard deviation 0.008715. A separate paraphrase
+stress test scored 0.92838.
+
+The final release initializes the catalog in approximately 9.6 seconds and
+averages 39.27 ms per turn, with an 84.88 ms p95 latency on the recorded
+machine. These measurements are hardware-dependent, but illustrate the
+practical benefit of a small in-memory deterministic system.
+
+The public sessions influenced early development, so the public folds are
+guards for later changes rather than substitutes for the organizer's unseen
+private evaluation. We make this distinction explicit rather than presenting
+the public score as a guarantee.
 
 ## AI assistance disclosure
 
@@ -90,13 +157,21 @@ design and implementation decisions. No LLM is called by the submitted runtime;
 the agent is deterministic, offline, and reports zero model tokens. See
 `docs/AI_ASSISTANCE.md` for the full disclosure.
 
+## Dataset and tools
+
+The evaluation uses the organizer-provided frozen 50,000-product catalog and
+200 public development sessions from the participant kit, derived from Amazon
+Reviews 2023. Development tools include Python 3.11, Conda, Git, and pytest.
+The runtime uses the Python standard library only; pytest is used for
+development tests. No runtime APIs, external model assets, images, videos,
+user identifiers, reviews, private sessions, or network services are used.
+
 ## Challenges
 
-The hardest issue was not retrieval—it was deciding which question was worth a
-turn. Raw entropy prefers attributes such as brand because they partition the
-catalog well, even when the simulated customer cannot answer them. We added an
-answerability-aware customer model so information gain is rewarded only when
-the answer is likely to reveal usable evidence.
+The hardest issue was deciding which question was worth spending a turn on.
+Raw entropy prefers attributes that partition the catalog well, even when the
+customer cannot answer them. We therefore made question value depend on both
+uncertainty reduction and answerability.
 
 Another challenge was avoiding overfitting to the public simulator's wording.
 A paraphrase stress test exposed that an opening such as “Hoping to find…” was
@@ -104,27 +179,19 @@ not parsed as a category. We fixed the structure rather than accumulating more
 templates: parsing is now turn-aware, treating the first message as an opening
 and subsequent non-refusal messages as evidence.
 
-## Accomplishments
-
-- Hit Rate@10: 1.000 on all 200 public sessions
-- MRR: 0.932103
-- MTTC: 2.19 turns
-- TechnicalScore: 0.955831 versus the 0.10671 official baseline
-- 0 reported tokens and $0 model cost
-- Fully deterministic and offline
-- 0.92838 TechnicalScore under the paraphrased-customer stress test
-- 57 passing automated tests, including split safeguards and the official
-  evaluator tests
-- 1.000 Hit Rate on every deterministic 40-session fold, with TechnicalScore
-  ranging from 0.944321 to 0.966583
-
 ## What we learned
 
-In multi-turn recommendation, acquiring the right evidence can be more valuable
-than adding a more expensive model. We also learned that seemingly reasonable
-signals must be measured: the aggregate profile prior reduced public-set
-performance, while a ramped recommendation budget substantially improved MRR.
-Both findings changed the shipped configuration.
+The biggest lesson was that conversational recommendation is an evidence
+acquisition problem as much as a ranking problem. A stronger ranker cannot
+recover information the customer has not yet supplied. The right question can
+be more valuable than another paragraph of generated explanation.
+
+We also learned that the simplest signal was often the strongest one. Category
+information provided the largest single improvement, while generic profile
+signals sometimes acted as noisy tie-breakers and were removed. Similarly,
+semantic retrieval was useful as an experiment but did not beat the final
+lexical baseline on our guard. We kept the configuration that generalized
+better within the available evidence, not the one that sounded most advanced.
 
 ## What's next
 
@@ -160,14 +227,8 @@ targets before enabling them for a live catalog.
 
 ## Team
 
-- Ronak Kalvani — first-year PhD student in Computer Science at the National
-  University of Singapore (NUS); implementation, retrieval, ranking,
-  adaptive questioning, parsing, evaluation, testing, and technical
-  documentation.
-- Aniket Khan — first-year PhD student in Computer Science at the National
-  University of Singapore (NUS); originated the lexical-questioning idea
-  inspired by Akinator, problem framing, experiment design, solution review,
-  and demo and presentation support.
+EntropyShop was built by Aniket Khan and Ronak Kalvani, both first-year PhD
+students in Computer Science at the National University of Singapore (NUS).
 
 ## Links
 
