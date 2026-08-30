@@ -16,6 +16,7 @@ can never permanently eliminate the target.
 from __future__ import annotations
 
 from .catalog import Catalog
+from .semantic import SemanticIndex
 from .text import content_tokens, normalize, token_variants
 
 
@@ -28,6 +29,7 @@ class Retriever:
         self._bucket_tokens: dict[str, set[str]] = {
             key: set(content_tokens(key)) for key in catalog.bucket_docs
         }
+        self._semantic_index: SemanticIndex | None = None
 
     # -- helpers -----------------------------------------------------------
 
@@ -96,6 +98,25 @@ class Retriever:
             return scores
         top = sorted(scores.items(), key=lambda item: (-item[1], self.catalog.ids[item[0]]))[:limit]
         return dict(top)
+
+    def prepare_semantic(self, max_df_ratio: float = 0.25) -> None:
+        """Build the optional index before the first customer turn."""
+        if self._semantic_index is None:
+            self._semantic_index = SemanticIndex(self.catalog, max_df_ratio=max_df_ratio)
+
+    def semantic_scores(
+        self,
+        query_text: str,
+        limit: int,
+        max_df_ratio: float = 0.25,
+        minimum_score: float = 0.0,
+    ) -> dict[int, float]:
+        """Return cosine scores from the optional offline vector index."""
+        self.prepare_semantic(max_df_ratio=max_df_ratio)
+        scores = self._semantic_index.scores(query_text, limit)
+        if minimum_score <= 0.0:
+            return scores
+        return {doc: score for doc, score in scores.items() if score >= minimum_score}
 
     def build_pool(
         self,

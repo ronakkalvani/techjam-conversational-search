@@ -45,8 +45,10 @@ flowchart TD
     C --> D{Retrieval routes}
     D -->|Route A: category| E[bucket index<br/>exact then fuzzy resolution]
     D -->|Route B: lexical| F[inverted index<br/>IDF-weighted sweep]
+    D -->|Route C: semantic, opt-in| S[offline sparse vector index<br/>TF-IDF · concepts · subwords]
     E --> G[Candidate pool<br/>union, never intersection]
     F --> G
+    S --> G
 
     G --> H[ranking.Ranker — stage 1<br/>constraint coverage · lexical · category · priors]
     H --> I[ranking.Ranker — stage 2<br/>phrase containment · facets · conflict · budget]
@@ -62,6 +64,15 @@ flowchart TD
     O -.customer answers.-> A
 ```
 
+## Final submission mode
+
+The submitted configuration keeps `use_intent_policy` and
+`use_semantic_route` disabled. This is the measured baseline: category and
+lexical retrieval, deterministic two-stage ranking, explicit session state,
+and information-gain clarification. The intent-conditioned and sparse-vector
+routes remain available as reproducible ablations, but they are not part of the
+reported final score because they reduced the held-out public guard.
+
 ## Layers and responsibilities
 
 | Module | Owns | Deliberately does not |
@@ -72,8 +83,9 @@ flowchart TD
 | `catalog.py` | Immutable indexes: postings, buckets, priors, predicted constraints | Mutate the source file |
 | `constraints.py` | Turn-aware parsing, constraint records, override semantics | Raise on malformed input |
 | `state.py` | Per-session belief, fully isolated | Share anything across sessions |
-| `retrieval.py` | Two-route candidate pool | Hard-filter the target away |
-| `ranking.py` | Two-stage deterministic fusion | Call a model |
+| `retrieval.py` | Category/lexical pool plus optional semantic vector route | Hard-filter the target away |
+| `semantic.py` | Offline sparse vector features and cosine candidate scores | Download a model or call a service |
+| `ranking.py` | Two-stage deterministic fusion with optional intent weights | Call a model |
 | `questions.py` | Entropy, expected residual entropy, question utility | Read labels or evaluator state |
 | `policies.py` | Which question to ask, and when to stop asking | Hard-code a session-specific sequence |
 | `explanations.py` | Fixed customer-facing templates | Sample or generate text |
@@ -173,9 +185,9 @@ weak evidence — but it can no longer exclude anything.
 
 | Property | Value |
 |---|---|
-| Catalog init | ~11 s (once) |
+| Catalog init | ~9.6 s (once, final release run) |
 | Memory | ~360 MB resident |
-| Per-turn latency | 42 ms mean, 101 ms p95 |
+| Per-turn latency | 39.27 ms mean, 84.88 ms p95 (final release run) |
 | Token usage | 0 — no model at runtime |
 | Network | none |
 | Determinism | total; ties break on `parent_asin` |

@@ -1,7 +1,8 @@
 # EntropyShop Submission Pack
 
 This file contains paste-ready Devpost copy and the recording plan for the
-three-minute demonstration. Replace only the final YouTube link after upload.
+three-minute demonstration. The video URL must be added after uploading the
+public YouTube demo.
 
 ## Project title
 
@@ -19,7 +20,7 @@ elicitation. Instead of spending every turn generating more prose, it maintains
 a belief over 50,000 real products, ranks its best candidates, and asks the
 clarification question expected to remove the most uncertainty. It runs fully
 offline, uses no LLM at runtime, reports zero tokens, and achieves a 0.955831
-TechnicalScore on the 200-session public benchmark.
+TechnicalScore on the 200-session public development benchmark.
 
 ## Inspiration
 
@@ -55,11 +56,26 @@ suppression and reactivate exploration.
 - Category-bucket plus IDF-weighted lexical retrieval
 - Two-stage deterministic ranking
 - Entropy and expected-residual-entropy question selection
-- Official evaluator integration, ablation scripts, robustness tests, and 50
+- Official evaluator integration, ablation scripts, robustness tests, and 57
   automated tests
 
 The runtime has no external service, API key, model download, or network
 dependency.
+
+## Devpost disclosure fields
+
+- **Track:** Track 4 — Shopping Copilot: AI Conversational Search and
+  Recommendations
+- **Development tools:** Python 3.11, Conda, Git, and pytest
+- **APIs:** None
+- **Libraries:** Python standard library at runtime; pytest for development
+  tests only
+- **Dataset and assets:** The organizer's frozen 50,000-product catalog and
+  200 public development sessions from the participant kit, derived from
+  Amazon Reviews 2023. No images, videos, user identifiers, reviews, private
+  sessions, or external model assets are used by the runtime.
+- **Runtime configuration:** Baseline mode with intent-conditioned and
+  semantic ablation flags disabled; no network and zero model tokens.
 
 ## Challenges
 
@@ -99,11 +115,11 @@ Both findings changed the shipped configuration.
 
 ## What's next
 
-The next improvement would be a small offline semantic index for genuine
-synonym gaps such as “sneakers” versus “trainers.” We would also expand facet
-vocabularies beyond clothing, shoes, and jewelry and evaluate the question
-policy against more diverse customer simulators before applying it to a live
-catalog.
+We prototyped an offline sparse semantic route and intent-conditioned policy as
+ablations. They remain disabled in the final baseline because the baseline
+performed better on the held-out public guard. Given more time, we would test
+these routes against independently authored customer language and unseen
+targets before enabling them for a live catalog.
 
 ## Feasibility disclosure
 
@@ -114,22 +130,24 @@ catalog.
 | API credentials | None |
 | Token usage | 0 |
 | Estimated model cost | $0 |
-| Catalog initialization | Approximately 6 seconds on the development machine |
-| Per-turn latency | Approximately 42 ms mean / 101 ms p95; hardware-dependent |
-| Python | Verified on Python 3.11.16; supports Python 3.10+ |
+| Catalog initialization | Approximately 9.6 seconds in the final release run; hardware-dependent |
+| Per-turn latency | 39.27 ms mean / 84.88 ms p95 in the final release run; hardware-dependent |
+| Python | Python 3.11 declared in `environment.yml`; runtime supports Python 3.10+ |
 
 ## Team
 
-- Kalvani Ronak Sunilbhai — agent architecture and implementation, retrieval,
+- Ronak Kalvani — first-year PhD student in Computer Science at the National
+  University of Singapore (NUS); agent architecture and implementation, retrieval,
   ranking, adaptive questioning, parsing, evaluation, testing, and technical
   documentation.
-- Aniket Khan — problem framing, solution review, and demo and presentation
-  support.
+- Aniket Khan — first-year PhD student in Computer Science at the National
+  University of Singapore (NUS); problem framing, solution review, experiment design,
+  and demo and presentation support.
 
 ## Links
 
 - Source code: https://github.com/ronakkalvani/techjam-conversational-search
-- Demo video: add the public YouTube URL after upload
+- Demo video: **PENDING — add the public YouTube URL before submitting on Devpost**
 
 ## Three-minute video script
 
@@ -151,7 +169,7 @@ Show the entropy utility formula and architecture diagram.
 
 ### 0:45–1:45 — Live official-protocol session
 
-Run:
+Run from the repository root:
 
 ```bash
 conda activate entropyshop
@@ -182,8 +200,8 @@ Show `docs/ARCHITECTURE.md` or the README diagram.
 
 “Across all 200 public sessions, Hit Rate is 1.0, MRR is 0.932, and the final
 TechnicalScore is 0.955831. A paraphrase stress test scores 0.928. The runtime
-uses zero tokens, costs zero dollars, and averages tens of milliseconds per
-turn.”
+uses zero tokens, costs zero dollars, and averages 39.27 milliseconds per turn
+in our final release run.”
 
 Show the results table and robustness table.
 
@@ -198,11 +216,12 @@ Show the project title, team names, and repository URL.
 ## Recording checklist
 
 - Use a terminal font large enough for the recommendation titles to be read.
-- Start from the repository root with the Conda environment already activated.
+- Start from the repository root with the documented Conda environment
+  activated.
 - Run the demo once before recording so disk caches are warm.
 - Keep the GitHub repository public.
 - Show the official-data attribution and make no claim about private-set
   performance.
 - Keep the video at or below three minutes.
-- Upload as a public or unlisted YouTube video and paste the final link above
-  and into Devpost.
+- Upload the video to YouTube with **public visibility** and paste the final
+  link above and into Devpost.

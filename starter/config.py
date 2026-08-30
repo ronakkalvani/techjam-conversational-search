@@ -76,6 +76,12 @@ class RankingConfig:
     # Candidate pool sizes.
     bucket_pool_limit: int = 2000
     lexical_pool_limit: int = 1200
+    semantic_pool_limit: int = 300
+    semantic_min_score: float = 0.22
+    # Offline vector similarity is supporting evidence, never a replacement
+    # for explicit constraints. The semantic route is opt-in for ablations.
+    w_semantic: float = 0.20
+    use_semantic_route: bool = False
     # Tokens appearing in more than this fraction of the catalog are ignored
     # for scoring: they cost time and carry almost no discriminative weight.
     max_df_ratio: float = 0.25
@@ -145,6 +151,9 @@ class PolicyConfig:
     # The popularity prior is kept: it helps when evidence is thin.
     use_profile_prior: bool = False
     use_popularity_prior: bool = True
+    # When enabled, the intent estimate changes ranking and question policy.
+    # False preserves the original public-baseline behaviour.
+    use_intent_policy: bool = False
 
 
 @dataclass(frozen=True)

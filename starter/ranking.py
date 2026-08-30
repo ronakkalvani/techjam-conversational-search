@@ -26,6 +26,8 @@ component cannot dominate merely because of its numeric scale. Ties break on
 
 from __future__ import annotations
 
+from dataclasses import replace
+
 from .catalog import Catalog
 from .config import RankingConfig
 from .facets import constraint_facet_values
@@ -157,6 +159,31 @@ class Ranker:
         hits = sum(1 for token in profile_tokens if token in text)
         return hits / len(profile_tokens)
 
+    def _intent_config(self, intent_mode: str, enabled: bool) -> RankingConfig:
+        """Apply conservative mode-specific weights when the flag is enabled."""
+        config = self.config
+        if not enabled:
+            return config
+        if intent_mode == "buying":
+            return replace(
+                config,
+                w_constraint=config.w_constraint * 1.08,
+                w_phrase_bonus=config.w_phrase_bonus * 1.03,
+                w_facet=config.w_facet * 1.03,
+                w_semantic=config.w_semantic * 0.90,
+                w_prior=config.w_prior * 0.90,
+                w_profile=config.w_profile * 0.90,
+            )
+        if intent_mode == "browsing":
+            return replace(
+                config,
+                w_category=config.w_category * 1.05,
+                w_bucket=config.w_bucket * 1.05,
+                w_semantic=config.w_semantic * 1.08,
+                w_prior=config.w_prior * 1.03,
+            )
+        return config
+
     # -- public API --------------------------------------------------------
 
     def rank(
@@ -169,9 +196,12 @@ class Ranker:
         profile_tokens: list[str],
         use_profile: bool,
         use_popularity: bool,
+        semantic_scores: dict[int, float] | None = None,
+        intent_mode: str = "uncertain",
+        intent_policy: bool = False,
     ) -> list[tuple[int, float]]:
         """Score the pool and return (doc, score) sorted best first."""
-        config = self.config
+        config = self._intent_config(intent_mode, intent_policy)
         pool_set = set(pool)
 
         coverage, total_weight = self._constraint_coverage(pool_set, constraints)
@@ -187,6 +217,7 @@ class Ranker:
             score += config.w_category * category_scores.get(doc, 0.0)
             if doc in bucket_members:
                 score += config.w_bucket
+            score += config.w_semantic * (semantic_scores or {}).get(doc, 0.0)
             if use_popularity:
                 score += config.w_prior * self.catalog.priors[doc]
             stage1.append((score, doc))

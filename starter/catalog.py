@@ -78,6 +78,9 @@ class Catalog:
         self.text: list[str] = []
         self.titles: list[str] = []
         self.category_text: list[str] = []
+        # Compact visible text used by the optional offline vector index.
+        self.semantic_text: list[str] = []
+        self.semantic_surface: list[str] = []
         self.bucket_key: list[str] = []
         self.price: list[float | None] = []
         self.predicted_constraints: list[tuple[str, ...]] = []
@@ -132,6 +135,8 @@ class Catalog:
 
                 self.titles.append(normalize(title))
                 self.category_text.append(category_text)
+                self.semantic_text.append(normalize(core))
+                self.semantic_surface.append(normalize(f"{title} {flatten(categories)}"))
                 self.text.append(full)
 
                 key = coarse_category([str(value) for value in categories])

@@ -64,12 +64,14 @@ def select_attribute(
     selector: QuestionSelector,
     scored: list[tuple[int, float]],
     config: PolicyConfig,
+    intent_mode: str = "uncertain",
 ) -> tuple[str | None, dict[str, dict[str, float]]]:
     """Choose the next ``ask_attribute``. Returns (attribute, diagnostics)."""
     attributes = _available(state, config)
     if not attributes:
         return None, {}
 
+    intent_enabled = config.use_intent_policy
     policy = config.question_policy
 
     if policy == "fixed":
@@ -90,6 +92,13 @@ def select_attribute(
         return selector.best_attribute(report), report
 
     bonus = _discovery_bonus(state, config) if policy == "hybrid" else {}
+    if intent_enabled and intent_mode == "buying":
+        # Do not force broad discovery when the opening already contains a
+        # concrete need, but retain ``other`` as a safe fallback for a private
+        # simulator that discloses an untyped requirement.
+        bonus = {name: value for name, value in bonus.items() if name != "other"}
+    if intent_enabled and intent_mode == "browsing" and "other" in attributes:
+        bonus = {**bonus, "other": bonus.get("other", 0.0) + 0.08}
     report = selector.evaluate(
         scored,
         state.disclosed_keys,

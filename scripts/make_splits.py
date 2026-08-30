@@ -180,11 +180,12 @@ def main() -> None:
     args = parser.parse_args()
 
     samples = load_jsonl(args.dataset)
+    source_path = args.dataset.relative_to(ROOT) if args.dataset.is_relative_to(ROOT) else args.dataset
     manifest = build_manifest(
         samples,
         seed=args.seed,
         fold_count=args.folds,
-        source=str(args.dataset.relative_to(ROOT)) if args.dataset.is_relative_to(ROOT) else str(args.dataset),
+        source=source_path.as_posix(),
         source_sha256=_file_sha256(args.dataset),
     )
     rendered = json.dumps(manifest, indent=2) + "\n"

@@ -56,6 +56,10 @@ class Agent:
             catalog_path, max_df_ratio=self.config.ranking.max_df_ratio
         )
         self.retriever = Retriever(self.catalog)
+        if self.config.ranking.use_semantic_route:
+            # Keep index construction out of the first respond() call so the
+            # measured per-turn latency reflects retrieval, not initialization.
+            self.retriever.prepare_semantic(self.config.ranking.max_df_ratio)
         self.ranker = Ranker(self.catalog, self.retriever, self.config.ranking)
         self.selector = QuestionSelector(self.catalog, self.config.questions)
         self._sessions: dict[str, SessionState] = {}
@@ -92,7 +96,13 @@ class Agent:
         scored = self._rank(state)
         docs = [doc for doc, _score in scored]
 
-        attribute, _report = select_attribute(state, self.selector, scored, self.config.policy)
+        attribute, _report = select_attribute(
+            state,
+            self.selector,
+            scored,
+            self.config.policy,
+            intent_mode=state.intent_mode,
+        )
         if attribute in state.blocked_attributes():
             attribute = None
         state.note_asked(attribute)
@@ -145,6 +155,10 @@ class Agent:
             state.intent_mode = "buying" if parsed.new_constraints else "browsing"
 
         if parsed.kind == "override":
+            # An override is a fresh, concrete need even if the earlier
+            # session began as browsing. This lets the intent policy favour
+            # precision for the new request.
+            state.intent_mode = "buying"
             state.constraints.apply_override(parsed.override_value, turn)
             state.override_count += 1
             # Scores change materially and pre-override turns could not convert,
@@ -207,6 +221,25 @@ class Agent:
             ranking_config.lexical_pool_limit,
         )
 
+        semantic_scores: dict[int, float] = {}
+        if ranking_config.use_semantic_route:
+            semantic_parts = [text for text, _weight, _attribute in constraints]
+            semantic_parts.extend((state.category or "", " ".join(state.residual_tokens)))
+            semantic_min_score = ranking_config.semantic_min_score
+            if policy.use_intent_policy and state.intent_mode == "buying":
+                # In buying mode semantic similarity is a rescue route, not a
+                # reason to outrank an explicit requirement. Browsing keeps
+                # the lower threshold because vocabulary variation is central
+                # to discovery.
+                semantic_min_score = max(semantic_min_score, 0.30)
+            semantic_scores = self.retriever.semantic_scores(
+                " ".join(part for part in semantic_parts if part),
+                ranking_config.semantic_pool_limit,
+                max_df_ratio=ranking_config.max_df_ratio,
+                minimum_score=semantic_min_score,
+            )
+            pool = sorted(set(pool) | set(semantic_scores))
+
         scored = self.ranker.rank(
             pool=pool,
             bucket_members=bucket_members,
@@ -216,6 +249,9 @@ class Agent:
             profile_tokens=state.profile_tokens,
             use_profile=policy.use_profile_prior,
             use_popularity=policy.use_popularity_prior,
+            semantic_scores=semantic_scores,
+            intent_mode=state.intent_mode,
+            intent_policy=policy.use_intent_policy,
         )
 
         if policy.enable_exploration and state.previously_shown:

@@ -9,19 +9,27 @@ spend each clarification question where it buys the most information.
 
 No LLM at runtime. No network. Zero tokens. Fully deterministic.
 
+The final submission configuration is the deterministic baseline: category and
+lexical retrieval, two-stage ranking, explicit session state, and
+information-gain clarification. Intent-conditioned ranking and the offline
+semantic route are included as opt-in experiments, but are disabled for the
+reported submission because they reduced the held-out public score.
+
 | Metric | Official baseline | **EntropyShop** |
 |---|---|---|
 | Hit Rate@10 | 0.125 | **1.000** |
 | MRR | 0.068 | **0.932** |
 | MTTC | 9.81 | **2.19** |
 | Efficiency | 0.119 | **0.881** |
-| **TechnicalScore** | **0.10671** | **0.95583** |
+| **TechnicalScore** | **0.10671** | **0.955831** |
 | Token usage | 0 | **0** |
-| Per-turn latency | — | **42 ms** mean / 101 ms p95 |
+| Per-turn latency | — | **39.27 ms** mean / 84.88 ms p95* |
 
 Measured with the **unmodified** official evaluator over all 200 public
-sessions. Under a paraphrasing customer (`scripts/stress_paraphrase.py`) the
-score holds at **0.928** — see [Robustness](#robustness).
+sessions. *Latency is from the final local audit and is hardware-dependent.*
+Under a paraphrasing customer (`scripts/stress_paraphrase.py`) the score holds
+at **0.928** — see [Robustness](#robustness). The aggregate public score is a
+development result, not a claim about the organizer's private set.
 
 ---
 
@@ -65,21 +73,27 @@ from catalog metadata, is what correctly demotes `brand` and `category` beneath
 
 ## Architecture
 
+The diagram shows the optional semantic route for completeness. It is disabled
+in the final baseline configuration; enable it only for the documented
+ablation runs.
+
 ```mermaid
 flowchart LR
     A[User message] --> B[Turn-aware<br/>constraint parser]
     B --> C[Session state<br/>constraints · overrides]
     C --> D[Category route]
     C --> E[Lexical route]
-    D --> F[Candidate pool<br/>union]
-    E --> F
-    F --> G[Two-stage<br/>deterministic ranker]
-    G --> H[Top-k recommendations]
-    G --> I[Information-gain<br/>question selector]
-    I --> J[ask_attribute]
-    H --> K[Response]
-    J --> K
-    K -.answer.-> A
+    C --> F[Semantic vector route<br/>opt-in]
+    D --> G[Candidate pool<br/>union]
+    E --> G
+    F --> G
+    G --> H[Two-stage<br/>deterministic ranker]
+    H --> I[Top-k recommendations]
+    H --> J[Information-gain<br/>question selector]
+    J --> K[ask_attribute]
+    I --> L[Response]
+    K --> L
+    L -.answer.-> A
 ```
 
 Full detail, including failure paths and the three non-obvious design
@@ -87,9 +101,10 @@ decisions, is in **[docs/ARCHITECTURE.md](docs/ARCHITECTURE.md)**.
 
 ## Setup
 
-EntropyShop is verified on **Python 3.11.16** and supports Python 3.10+. The
-agent runtime itself needs no third-party package; `pytest` is included only
-for development and verification.
+EntropyShop declares **Python 3.11** in `environment.yml` and supports Python
+3.10+. The agent runtime itself needs no third-party package; `pytest` is
+included only for development and verification. The final local audit also
+passed on Python 3.14.6.
 
 ```bash
 git clone https://github.com/ronakkalvani/techjam-conversational-search.git
@@ -133,6 +148,11 @@ python scripts/stress_paraphrase.py --mode paraphrase
 # Verify and evaluate the deterministic public-session folds
 python scripts/make_splits.py --check
 python scripts/run_split_eval.py --split folds
+
+# Experimental ablations (flags are off by default)
+python scripts/run_split_eval.py --split validation --set policy.use_intent_policy=true
+python scripts/run_split_eval.py --split validation --set ranking.use_semantic_route=true
+python scripts/run_split_eval.py --split validation --set policy.use_intent_policy=true --set ranking.use_semantic_route=true
 ```
 
 The demo command runs against the real 50,000-product catalog and prints each
@@ -236,10 +256,10 @@ audit, commands, safeguards, and unseen-target testing roadmap.
   if the private simulator discloses differently; ranking would not, since it
   scores whatever text actually arrives, and exhausted attributes are learned
   within the session regardless.
-- **No semantic retrieval.** Purely lexical, so a genuine synonym gap
-  (`sneakers` vs `trainers`) is only partly covered by the facet vocabularies.
-  A small offline embedding index is the natural next step, and is the change
-  most likely to help on unseen phrasings.
+- **Semantic retrieval is not enabled in the final baseline.** The repository
+  includes a deterministic sparse-vector route for ablation, but it scored
+  0.949031 versus 0.955831 for the baseline on the public benchmark and is
+  therefore disabled in the submitted configuration.
 - **Facet vocabularies are hand-built** for Clothing/Shoes/Jewelry and would
   need extending for another category tree.
 
@@ -262,13 +282,14 @@ available in **[docs/SUBMISSION.md](docs/SUBMISSION.md)**.
    zero answerability. Show `answerability` demoting it.
 5. **Robustness** (30 s) — the paraphrase test: 0.742 → 0.928 after making
    parsing turn-aware. We found our own over-fitting and fixed it.
-6. **Numbers and honesty** (10 s) — 0.956, 42 ms, zero tokens, plus the
-   Hit-Rate bet we are explicit about.
+6. **Numbers and honesty** (10 s) — 0.956, 39.3 ms mean / 84.9 ms p95,
+   zero tokens, plus the Hit-Rate bet we are explicit about.
 
 ## Repository layout
 
 ```
-starter/            agent runtime (no evaluator import, no labels)
+agent.py             organizer-facing entrypoint exporting Agent
+starter/             agent runtime (no evaluator import, no labels)
   agent.py          official Agent interface + orchestration
   config.py         every tunable weight
   catalog.py        immutable indexes
@@ -276,7 +297,8 @@ starter/            agent runtime (no evaluator import, no labels)
   questions.py      entropy and question utility
   policies.py       fixed / entropy / other_first / hybrid
   ranking.py        two-stage deterministic fusion
-  retrieval.py      category + lexical routes
+  retrieval.py      category + lexical routes, optional semantic route
+  semantic.py       offline sparse vector ablation (disabled by default)
   facets.py         vocabularies and constraint typing
   state.py          per-session belief
   text.py           tokenisation
@@ -289,10 +311,10 @@ docs/               ARCHITECTURE · EXPERIMENTS · GENERALIZATION · SUBMISSION
 
 ## Compliance
 
-- Official `Agent` interface preserved; evaluator, catalog, public set, API
-  contract and baseline files unmodified.
-- Runtime imports no evaluator internals and reads no labels — enforced by
-  AST-level tests, not grep.
+- Root `agent.py` exports the organizer-facing `Agent` interface; helper code
+  remains under `starter/`.
+- The runtime does not import evaluator internals, read the public session file,
+  or access labels; this is enforced by AST-level tests.
 - No hard-coded ASINs, sample IDs or answer sequences — enforced by test.
 - No secrets, no credentials, no network access required.
 - Deterministic: identical inputs produce identical output.
@@ -301,5 +323,5 @@ docs/               ARCHITECTURE · EXPERIMENTS · GENERALIZATION · SUBMISSION
 
 | Member | Contribution |
 |---|---|
-| Kalvani Ronak Sunilbhai | Agent architecture and implementation; retrieval, ranking, adaptive questioning, parsing, evaluation, testing, and technical documentation |
-| Aniket Khan | Problem framing, solution review, and demo and presentation support |
+| Ronak Kalvani | First-year PhD student in Computer Science at the National University of Singapore (NUS); agent architecture, retrieval, ranking, adaptive questioning, parsing, evaluation, testing, and technical documentation |
+| Aniket Khan | First-year PhD student in Computer Science at the National University of Singapore (NUS); problem framing, solution review, experiment design, and demo/presentation support |
