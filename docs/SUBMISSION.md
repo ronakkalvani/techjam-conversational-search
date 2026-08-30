@@ -31,6 +31,10 @@ Knowing one, two, and four requirements produced sharply improving hit rates,
 so we designed the system around acquiring useful evidence quickly rather than
 making ranking alone increasingly complicated.
 
+The lexical-questioning concept was proposed by Aniket Khan, inspired by
+Akinator's question-driven narrowing of a hidden answer. EntropyShop adapts
+that idea to structured product attributes and expected information gain.
+
 ## What it does
 
 For every customer turn, EntropyShop:
@@ -77,6 +81,15 @@ dependency.
 - **Runtime configuration:** Baseline mode with intent-conditioned and
   semantic ablation flags disabled; no network and zero model tokens.
 
+## AI assistance disclosure
+
+ChatGPT was used during development as an engineering assistant for
+brainstorming, code drafting and review, debugging, test design, evaluation
+analysis, and documentation editing. The team made and reviewed the final
+design and implementation decisions. No LLM is called by the submitted runtime;
+the agent is deterministic, offline, and reports zero model tokens. See
+`docs/AI_ASSISTANCE.md` for the full disclosure.
+
 ## Challenges
 
 The hardest issue was not retrieval—it was deciding which question was worth a
@@ -121,6 +134,17 @@ performed better on the held-out public guard. Given more time, we would test
 these routes against independently authored customer language and unseen
 targets before enabling them for a live catalog.
 
+## Limitations and responsible claims
+
+- The `0.955831` result is on the 200-session public development set; it is not
+  a claim about the organizer's 800 private sessions.
+- The parser and facet vocabulary are hand-built for the supplied
+  Clothing/Shoes/Jewelry catalog and may miss unseen synonyms or categories.
+- The final baseline is lexical and deterministic. It does not use an LLM or
+  pretrained embedding model, and its optional semantic route is not enabled.
+- The agent operates on a frozen catalog and has no live inventory, checkout,
+  transaction, or production UI capability.
+
 ## Feasibility disclosure
 
 | Item | Disclosure |
@@ -137,11 +161,12 @@ targets before enabling them for a live catalog.
 ## Team
 
 - Ronak Kalvani — first-year PhD student in Computer Science at the National
-  University of Singapore (NUS); agent architecture and implementation, retrieval,
-  ranking, adaptive questioning, parsing, evaluation, testing, and technical
+  University of Singapore (NUS); implementation, retrieval, ranking,
+  adaptive questioning, parsing, evaluation, testing, and technical
   documentation.
 - Aniket Khan — first-year PhD student in Computer Science at the National
-  University of Singapore (NUS); problem framing, solution review, experiment design,
+  University of Singapore (NUS); originated the lexical-questioning idea
+  inspired by Akinator, problem framing, experiment design, solution review,
   and demo and presentation support.
 
 ## Links

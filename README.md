@@ -15,6 +15,20 @@ information-gain clarification. Intent-conditioned ranking and the offline
 semantic route are included as opt-in experiments, but are disabled for the
 reported submission because they reduced the held-out public score.
 
+## Design origin and AI assistance
+
+The core lexical-questioning idea came from Aniket Khan, inspired by
+Akinator's strategy of narrowing a hidden answer through a sequence of useful
+questions. We adapted that interaction pattern into catalog-grounded
+information-gain questioning for conversational shopping.
+
+ChatGPT was used during development as an engineering assistant for
+brainstorming, code drafting, debugging, test design, evaluation analysis, and
+documentation review. The team made the product decisions, reviewed and
+integrated the final implementation, and ran the experiments. **No LLM is used
+at runtime**: the submitted agent is offline, deterministic, and reports zero
+model tokens.
+
 | Metric | Official baseline | **EntropyShop** |
 |---|---|---|
 | Hit Rate@10 | 0.125 | **1.000** |
@@ -262,6 +276,9 @@ audit, commands, safeguards, and unseen-target testing roadmap.
   therefore disabled in the submitted configuration.
 - **Facet vocabularies are hand-built** for Clothing/Shoes/Jewelry and would
   need extending for another category tree.
+- **The product experience is deliberately limited.** This is a search and
+  clarification agent over a frozen catalog; it does not provide live
+  inventory, checkout, transactions, or a production UI.
 
 ## Three-minute demo script
 
@@ -307,6 +324,7 @@ scripts/            demo_session · run_eval · compare_policies · tune_config
                     inspect_errors · stress_paraphrase · split evaluation
 tests/              57 tests (44 agent + 7 split + 3 demo + 3 evaluator)
 docs/               ARCHITECTURE · EXPERIMENTS · GENERALIZATION · SUBMISSION
+                    AI_ASSISTANCE · data attribution and competition notes
 ```
 
 ## Compliance
@@ -317,11 +335,13 @@ docs/               ARCHITECTURE · EXPERIMENTS · GENERALIZATION · SUBMISSION
   or access labels; this is enforced by AST-level tests.
 - No hard-coded ASINs, sample IDs or answer sequences — enforced by test.
 - No secrets, no credentials, no network access required.
+- No LLM, model weights, or model API is used by the runtime; ChatGPT usage is
+  disclosed in [docs/AI_ASSISTANCE.md](docs/AI_ASSISTANCE.md).
 - Deterministic: identical inputs produce identical output.
 
 ## Team contributions
 
 | Member | Contribution |
 |---|---|
-| Ronak Kalvani | First-year PhD student in Computer Science at the National University of Singapore (NUS); agent architecture, retrieval, ranking, adaptive questioning, parsing, evaluation, testing, and technical documentation |
-| Aniket Khan | First-year PhD student in Computer Science at the National University of Singapore (NUS); problem framing, solution review, experiment design, and demo/presentation support |
+| Ronak Kalvani | First-year PhD student in Computer Science at the National University of Singapore (NUS); implementation, retrieval, ranking, parser/state integration, evaluation, testing, and technical documentation |
+| Aniket Khan | First-year PhD student in Computer Science at the National University of Singapore (NUS); originated the lexical-questioning idea inspired by Akinator, problem framing, experiment design, solution review, and demo/presentation support |
