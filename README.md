@@ -15,6 +15,14 @@ information-gain clarification. Intent-conditioned ranking and the offline
 semantic route are included as opt-in experiments, but are disabled for the
 reported submission because they reduced the held-out public score.
 
+The organizer keeps 800 additional sessions unreleased until the Devpost
+submission deadline. After the deadline, the final evaluation package will be
+released and teams will run the unmodified official evaluator in their own
+environments using their frozen submitted commit.
+
+See [docs/final_evaluation_faq.md](docs/final_evaluation_faq.md) for the final
+evaluation, network, credentials, hardware, data, and scoring policy.
+
 ## Design origin and AI assistance
 
 The core lexical-questioning idea came from Aniket Khan, inspired by
