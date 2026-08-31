@@ -201,6 +201,17 @@ performed better on the held-out public guard. Given more time, we would test
 these routes against independently authored customer language and unseen
 targets before enabling them for a live catalog.
 
+More specifically, we would freeze the current policy, create a genuinely blind
+evaluation set with new targets, new paraphrases, reordered requirements, and
+different refusal and override language, and use that set only for final
+measurement. We would then test a confidence-gated hybrid policy: keep the
+deterministic lexical route as the default, but consult the semantic and intent
+routes only when lexical evidence is weak or the conversation changes direction.
+Finally, we would collect human feedback on whether questions are easy to
+answer and genuinely useful, then calibrate the question policy against those
+responses. This would tell us whether the gains come from the underlying
+information-acquisition idea or from familiarity with the public simulator.
+
 ## Limitations and responsible claims
 
 - The `0.955831` result is on the 200-session public development set; it is not
