@@ -36,12 +36,13 @@ def compose_message(attribute: str | None, count: int, known_constraints: int) -
     if count == 0:
         return _NO_RESULTS if not attribute else f"{_NO_RESULTS} {question_text(attribute)}"
 
+    lead_start = "Here is 1 option" if count == 1 else f"Here are {count} options"
     if known_constraints == 0:
-        lead = f"Here are {count} options to start from."
+        lead = f"{lead_start} to start from."
     elif known_constraints == 1:
-        lead = f"Here are {count} options matching what you've described."
+        lead = f"{lead_start} matching what you've described."
     else:
-        lead = f"Here are {count} options matching the {known_constraints} details you've shared."
+        lead = f"{lead_start} matching the {known_constraints} details you've shared."
 
     if not attribute:
         return f"{lead} {_NO_QUESTION}"

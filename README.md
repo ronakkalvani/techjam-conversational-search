@@ -149,7 +149,10 @@ wc -l data/catalog.jsonl        # expect 50000
 ## Reproducing our results
 
 ```bash
-# Video-friendly single session using the official customer protocol
+# Genuine keyboard-driven session (no evaluator sample or simulated replies)
+python scripts/interactive_demo.py
+
+# Reproducible single session using the official customer protocol
 python scripts/demo_session.py --sample-id public_0094
 
 # Official evaluator — the number we report
@@ -179,10 +182,18 @@ python scripts/run_split_eval.py --split validation --set ranking.use_semantic_r
 python scripts/run_split_eval.py --split validation --set policy.use_intent_policy=true --set ranking.use_semantic_route=true
 ```
 
-The demo command runs against the real 50,000-product catalog and prints each
-customer turn, the agent's clarification field, titled recommendations,
-latency, and the final hidden-target reveal. Omit `--sample-id` to use the
-first sample for a scenario, or choose another official scenario:
+Use `interactive_demo.py` for a live presentation: every customer turn comes
+from the keyboard, while the same submission agent searches the real
+50,000-product catalog locally. It shows titled recommendations, visible
+catalog evidence, the interpreted belief state, latency, and zero model-token
+usage. Because a fresh human query has no preselected hidden product, this mode
+does not claim a hit rate or reveal a target.
+
+The reproducible `demo_session.py` command runs against the same catalog and
+prints each customer turn, the agent's clarification field, titled
+recommendations, latency, and the final hidden-target reveal. Omit
+`--sample-id` to use the first sample for a scenario, or choose another
+official scenario:
 
 ```bash
 python scripts/demo_session.py --scenario intent_override
