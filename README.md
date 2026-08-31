@@ -2,6 +2,8 @@
 
 **TikTok TechJam 2026 — Track 4: Shopping Copilot (AI Conversational Search and Recommendations)**
 
+[View EntropyShop on Devpost](https://devpost.com/software/entropyshop-information-theoretic-conversational-shopping)
+
 An information-theoretic conversational shopping agent. It treats finding a
 customer's hidden target as **active preference elicitation**: maintain a
 posterior over catalog candidates, recommend the best ones every turn, and
@@ -351,5 +353,5 @@ docs/               ARCHITECTURE · EXPERIMENTS · GENERALIZATION · SUBMISSION
 
 | Member | Contribution |
 |---|---|
-| Ronak Kalvani | First-year PhD student in Computer Science at the National University of Singapore (NUS); implementation, retrieval, ranking, parser/state integration, evaluation, testing, and technical documentation |
-| Aniket Khan | First-year PhD student in Computer Science at the National University of Singapore (NUS); originated the lexical-questioning idea inspired by Akinator, problem framing, experiment design, solution review, and demo/presentation support |
+| Ronak Kalvani | First-year PhD student in Computer Science at the National University of Singapore (NUS); implementation, retrieval, ranking, parser/state integration, evaluation, testing, technical documentation and demo/presentation |
+| Aniket Khan | First-year PhD student in Computer Science at the National University of Singapore (NUS); originated the lexical-questioning idea inspired by Akinator, problem framing, experiment design, solution review |
